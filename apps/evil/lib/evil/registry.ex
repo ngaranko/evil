@@ -17,6 +17,7 @@ defmodule EVIL.Registry do
   Returns `{:ok, pid}` if the bucket exists, `:error` otherwise.
   """
   def lookup(server, name) do
+    # 2. Lookup is now done directly in ETS, without accessing the server
     case :ets.lookup(server, name) do
       [{^name, pid}] -> {:ok, pid}
       [] -> :error
@@ -39,7 +40,7 @@ defmodule EVIL.Registry do
 
   ## Server Callbacks
   def init(table) do
-    names = :ets
+    names = :ets.new(table, [:named_table, read_concurrency: true])
     refs  = %{}
     {:ok, {names, refs}}
   end
