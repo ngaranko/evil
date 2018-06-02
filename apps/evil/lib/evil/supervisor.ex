@@ -8,7 +8,8 @@ defmodule EVIL.Supervisor do
   def init(:ok) do
     children = [
       {DynamicSupervisor, name: EVIL.BucketSupervisor, strategy: :one_for_one},
-      {EVIL.Registry, name: EVIL.Registry}
+      {EVIL.Registry, name: EVIL.Registry},
+      {Task.Supervisor, name: EVIL.RouterTasks}
     ]
 
     Supervisor.init(children, strategy: :one_for_all)

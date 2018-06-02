@@ -8,8 +8,10 @@ defmodule EVILServer.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      # Starts a worker by calling: EVILServer.Worker.start_link(arg)
-      # {EVILServer.Worker, arg},
+      {Task.Supervisor, name: EVILServer.TaskSupervisor},
+      Supervisor.child_spec(
+        {Task, fn -> EVILServer.accept(4040) end},
+        restart: :permanent)
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

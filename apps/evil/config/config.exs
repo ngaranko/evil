@@ -28,3 +28,5 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+config :iex, default_prompt: ">>>"
+config :evil, :routing_table, [{?a..?m, :"foo@nicks-mac-pro-2"}, {?n..?z, :"bar@nicks-mac-pro-2"}]
